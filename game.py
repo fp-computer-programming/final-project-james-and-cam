@@ -1,28 +1,29 @@
-from curses.ascii import NUL
 import os, sys
+import pandas as pd
 import pygame
 import time
 from pygame.locals import *
 clock = pygame.time.Clock()
 
 # Constants ::
-Time_Limit= 30
-Width, Height = 1200,700
-width = Width/6
-height = Height/8
+Time_Limit = 30
+Width = 1200
+Height = 700
+width = Width / 6
+height = Height / 8
 question_file = 'qset1_backup'
 # Rows, Cols = 0,0
 Mode = 'board_time'
 # COLORS ::
-white = (255,255,255)
-grey = (160,160,160)
-black = (0,0,0)
-blue = (0,0,255)
-red = (255,0,0)
-green = (0,255,0)
-yellow = (255,255,0)
+white = (255, 255, 255)
+grey = (160, 160, 160)
+black = (0, 0, 0)
+blue = (0, 0, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+yellow = (255, 255, 0)
 # categories = ['famous people','geography','history','sport','science','trivia']
-def aspect_scale(img,bx,by):
+def aspect_scale(img, bx, by):
     """ Scales 'img' to fit into box bx/by.
      This method will retain the original image's aspect ratio """
     ix,iy = img.get_size()
@@ -50,7 +51,7 @@ def aspect_scale(img,bx,by):
     return pygame.transform.scale(img, (int(round(sx)),int(round(sy))))
 
 class Cell(object):
-	def __init__(self,data):
+	def __init__(self, data):
 		self.type = data['type']
 		self.xPos = data['row']*width
 		self.yPos = data['col']*height
@@ -80,11 +81,11 @@ class Cell(object):
 
 
 categories = [Cell({
-					'score': 'Famous People', 
+					'score': 'Random', 
 					'row': 0, 
 					'col': 0, 
 					'type': '', 
-					'question': 'Famous People',
+					'question': 'Random',
 					'selected':False,
 					
 					})]
@@ -163,7 +164,7 @@ class GameBoard(object):
 	def read_question_file(self,question_file):
 				q=[]
 				cats=[]
-				df = NUL #pd.read_csv(question_file+'.csv',header=0)
+				df = pd.read_csv(question_file+'.csv',header=0)
 				
 				for i,row in enumerate(df['Row']):
 					question = str(df["Question"][i])
@@ -411,3 +412,4 @@ while True:
 
 	pygame.display.update()
 	clock.tick(60)
+    
